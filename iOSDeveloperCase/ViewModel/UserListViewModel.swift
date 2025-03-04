@@ -4,4 +4,24 @@
 //
 //  Created by Göknur Bulut on 4.03.2025.
 //
+import Foundation
 
+
+class UserListViewModel {
+    private let userRepository = UserRepository()
+    var users: [User] = []
+    var didUpdateUsers: (() -> Void)?
+    var didFailWithError: ((Error) -> Void)?
+    
+    func fetchUsers() {
+        userRepository.getUsers { [weak self] result in
+            switch result {
+            case .success(let users):
+                self?.users = users
+                self?.didUpdateUsers?()
+            case .failure(let error):
+                self?.didFailWithError?(error)
+            }
+        }
+    }
+}
