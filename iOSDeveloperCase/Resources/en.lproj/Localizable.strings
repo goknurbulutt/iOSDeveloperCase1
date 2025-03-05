@@ -5,3 +5,14 @@
 //  Created by Göknur Bulut on 5.03.2025.
 //
 
+//  Localizable.strings for English
+"name" = "Name";
+"email" = "Email";
+"phone" = "Phone";
+"website" = "Website";
+"user" = "User";
+"user_detail" = "User Detail";
+"no_name_provided" = "No name provided";
+"no_email_provided" = "No email provided";
+"no_phone_provided" = "No phone provided";
+"no_website_provided" = "No website provided";

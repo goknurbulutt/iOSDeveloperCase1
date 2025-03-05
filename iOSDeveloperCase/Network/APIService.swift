@@ -7,6 +7,7 @@
 
 import Foundation
 
+// This is a simple network service that fetches users from a remote server.
 class NetworkService {
     static let shared = NetworkService()
     
@@ -14,6 +15,7 @@ class NetworkService {
     
     private let baseURL = "https://jsonplaceholder.typicode.com"
     
+    // Fetches users from the remote server
     func fetchUsers(completion: @escaping (Result<[User], Error>) -> Void) {
         guard let url = URL(string: "\(baseURL)/users") else {
             let error = NSError(domain: "NetworkService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])

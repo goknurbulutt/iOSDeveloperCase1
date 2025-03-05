@@ -8,6 +8,7 @@
 
 import Foundation
 
+// This class is responsible for fetching the user details.
 class UserDetailViewModel {
     
     private let user: User

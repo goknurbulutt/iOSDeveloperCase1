@@ -5,3 +5,15 @@
 //  Created by Göknur Bulut on 5.03.2025.
 //
 
+//  Localizable.strings for Turkish
+"name" = "İsim";
+"email" = "E-posta";
+"phone" = "Telefon";
+"website" = "Web Sitesi";
+"user" = "Kullanıcılar";
+"user_detail" = "Kullanıcı Detayı";
+
+"no_name_provided" = "Ad sağlanmadı";
+"no_email_provided" = "E-posta sağlanmadı";
+"no_phone_provided" = "Telefon sağlanmadı";
+"no_website_provided" = "Web sitesi sağlanmadı";

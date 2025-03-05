@@ -6,19 +6,18 @@
 //
 import UIKit
 
+// This screen displays the details of a user.
 class UserDetailViewController: UIViewController {
     
-    // MARK: - Properties
     private let viewModel: UserDetailViewModel
     
-   
     private let nameLabel = UILabel()
     private let emailLabel = UILabel()
     private let phoneLabel = UILabel()
     private let websiteLabel = UILabel()
     private let loadingIndicator = UIActivityIndicatorView(style: .large)
     
-    // MARK: - Initializer
+    // This is the initializer for the UserDetailViewController.
     init(viewModel: UserDetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -28,13 +27,12 @@ class UserDetailViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "User Detail"
+           title = NSLocalizedString("user_detail", comment: "User detail screen title")
         
-        
+   
         let attributes: [NSAttributedString.Key: Any] = [
                     .font: UIFont.systemFont(ofSize: 24, weight: .bold),
                     .foregroundColor: UIColor(red: 0.0, green: 0.0, blue: 0.5, alpha: 1.0)
@@ -46,10 +44,11 @@ class UserDetailViewController: UIViewController {
         fetchUserDetails()
     }
     
-    // MARK: - Setup UI
+    // This func setups the UI elements programmatically.
     private func setupUI() {
       
         view.backgroundColor = UIColor.systemGray6
+    
         
         
         loadingIndicator.center = view.center
@@ -120,28 +119,39 @@ class UserDetailViewController: UIViewController {
         ])
     }
     
-    // MARK: - Fetch User Details
+    // This function fetches user details from the API and sets the labels.
     private func fetchUserDetails() {
         loadingIndicator.startAnimating()
+
+        let nameText = NSLocalizedString("name", comment: "Name label text")
+        let emailText = NSLocalizedString("email", comment: "Email label text")
+        let phoneText = NSLocalizedString("phone", comment: "Phone label text")
+        let websiteText = NSLocalizedString("website", comment: "Website label text")
         
-       
+        let nameError = NSLocalizedString("no_name_provided", comment: "Name label text")
+        let emailError = NSLocalizedString("no_email_provided", comment: "Email label text")
+        let phoneError = NSLocalizedString("no_phone_provided", comment: "Phone label text")
+        let websiteError = NSLocalizedString("no_website_provided", comment: "Website label text")
+        
         viewModel.fetchUserDetails { [weak self] result in
             DispatchQueue.main.async {
                 self?.loadingIndicator.stopAnimating()
                 switch result {
                 case .success(let user):
-                    self?.nameLabel.text = "Name: \(user.name ?? "No name provided")"
-                    self?.emailLabel.text = "Email: \(user.email ?? "No email provided")"
-                    self?.phoneLabel.text = "Phone: \(user.phone ?? "No phone provided")"
-                    self?.websiteLabel.text = "Website: \(user.website ?? "No website provided")"
+                    
+                    self?.nameLabel.text = "\(nameText): \(user.name ?? nameError)"
+                    self?.emailLabel.text = "\(emailText): \(user.email ?? emailError)"
+                    self?.phoneLabel.text = "\(phoneText): \(user.phone ?? phoneError)"
+                    self?.websiteLabel.text = "\(websiteText): \(user.website ?? websiteError)"
                 case .failure(let error):
                     self?.showError(error)
                 }
             }
         }
     }
-    
-    // MARK: - Show Error
+
+
+    // This function shows an alert with the given error message.
     private func showError(_ error: Error) {
         let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

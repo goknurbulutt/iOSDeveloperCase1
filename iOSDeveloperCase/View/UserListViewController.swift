@@ -7,7 +7,7 @@
 
 import UIKit
 
-
+// UserListViewController is responsible for displaying a list of users fetched from the API.
 class UserListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     private let viewModel = UserListViewModel()
@@ -17,7 +17,7 @@ class UserListViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Users"
+        title = NSLocalizedString("user", comment: "User  screen title")
         
         
         let attributes: [NSAttributedString.Key: Any] = [
@@ -30,18 +30,18 @@ class UserListViewController: UIViewController, UITableViewDelegate, UITableView
         setupUI()
         viewModel.fetchUsers()
         
-        // Binding ViewModel to the view
         viewModel.didUpdateUsers = { [weak self] in
             self?.activityIndicator.stopAnimating() 
             self?.tableView.reloadData()
         }
         
         viewModel.didFailWithError = { [weak self] error in
-            self?.activityIndicator.stopAnimating() // Stop loading indicator in case of error
+            self?.activityIndicator.stopAnimating()
             print("Error: \(error.localizedDescription)")
         }
     }
     
+    // This func setups the UI elements programmatically.
     private func setupUI() {
         
         tableView.frame = view.bounds
@@ -56,6 +56,7 @@ class UserListViewController: UIViewController, UITableViewDelegate, UITableView
         view.addSubview(activityIndicator)
     }
     
+    // Below are the required UITableViewDataSource and UITableViewDelegate methods.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.users.count
     }
