@@ -31,6 +31,17 @@ class UserDetailViewController: UIViewController {
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "User Detail"
+        
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.systemFont(ofSize: 24, weight: .bold),
+                    .foregroundColor: UIColor(red: 0.0, green: 0.0, blue: 0.5, alpha: 1.0)
+                ]
+                navigationController?.navigationBar.titleTextAttributes = attributes
+                
+        
         setupUI()
         fetchUserDetails()
     }
@@ -119,10 +130,10 @@ class UserDetailViewController: UIViewController {
                 self?.loadingIndicator.stopAnimating()
                 switch result {
                 case .success(let user):
-                    self?.nameLabel.text = "Name: \(user.name)"
-                    self?.emailLabel.text = "Email: \(user.email)"
-                    self?.phoneLabel.text = "Phone: \(user.phone)"
-                    self?.websiteLabel.text = "Website: \(user.website)"
+                    self?.nameLabel.text = "Name: \(user.name ?? "No name provided")"
+                    self?.emailLabel.text = "Email: \(user.email ?? "No email provided")"
+                    self?.phoneLabel.text = "Phone: \(user.phone ?? "No phone provided")"
+                    self?.websiteLabel.text = "Website: \(user.website ?? "No website provided")"
                 case .failure(let error):
                     self?.showError(error)
                 }

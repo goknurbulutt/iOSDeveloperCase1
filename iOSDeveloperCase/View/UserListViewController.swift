@@ -7,7 +7,7 @@
 
 import UIKit
 
-// ViewController to display the list of users.
+
 class UserListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     private let viewModel = UserListViewModel()
@@ -16,6 +16,16 @@ class UserListViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Users"
+        
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.systemFont(ofSize: 24, weight: .bold),
+                    .foregroundColor: UIColor(red: 0.0, green: 0.0, blue: 0.5, alpha: 1.0) 
+                ]
+                navigationController?.navigationBar.titleTextAttributes = attributes
+                
         
         setupUI()
         viewModel.fetchUsers()
@@ -54,7 +64,7 @@ class UserListViewController: UIViewController, UITableViewDelegate, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath)
         let user = viewModel.users[indexPath.row]
         
-        cell.textLabel?.text = "\(user.name) - \(user.email)"
+        cell.textLabel?.text = "\(user.name ?? "No name provided") - \(user.email ?? "No email provided")"
         return cell
     }
     
@@ -62,7 +72,7 @@ class UserListViewController: UIViewController, UITableViewDelegate, UITableView
         let selectedUser = viewModel.users[indexPath.row]
         let detailViewModel = UserDetailViewModel(user: selectedUser)
         let detailVC = UserDetailViewController(viewModel: detailViewModel)
-        navigationController?.pushViewController(detailVC, animated: true)
+        navigationController?.pushViewController(detailVC, animated: true) 
     }
 
 }
